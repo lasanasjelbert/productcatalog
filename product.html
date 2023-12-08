@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Catalog</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8; /* Light gray background */
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em; /* Adjusted font size */
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center; /* Center the product cards */
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 3px solid #ddd; /* Light gray border */
+            border-radius: 8px;
+            padding: 15px;
+            width: 300px;
+            height: 650px; /* Adjusted height to accommodate the price */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle box-shadow */
+            background-color: white;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+            position: relative;
+            overflow: hidden; 
+            margin-bottom: 20px; 
+        }
+
+        .product-card:hover {
+            transform: scale(1.03); /* Slightly increase size on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhance box-shadow on hover */
+        }
+
+        .product-image {
+            width: 100%;
+            height: 70%; /* Adjusted to take the full height */
+            border-radius: 8px 8px 0 0;
+        }
+
+        .label {
+            text-align: center;
+            background-color: #333;
+            color: white;
+            font-size: 1.2em; /* Adjusted font size */
+            padding: 8px;
+            margin: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+        }
+
+        .product-card:hover .label {
+            background-color: #555; /* Change background color on hover */
+        }
+
+        .price {
+            text-align: center;
+            font-size: 1.1em; /* Adjusted font size */
+            margin: 5px 0;
+            transition: color 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+        }
+
+        .product-card:hover .price {
+            color: #ff6600; /* Change text color on hover */
+        }
+
+        .buy-button {
+            background-color: #ff6600; /* Complementing color for the button */
+            color: white;
+            padding: 12px; /* Increased button padding */
+            text-align: center;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out; /* Add a smooth transition effect on hover */
+            width: 100%; /* Make the button full width */
+            box-sizing: border-box; /* Include padding in the button width */
+        }
+
+        .buy-button:hover {
+            background-color: #e54d00; /* Darker shade on hover */
+        }
+
+        /* Additional Styles */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Velocity Kicks</h1>
+    </header>
+
+    <div class="product-container" id="output"></div>
+
+    <footer>
+        &copy; 2023 Velocity Kicks. All rights reserved.
+    </footer>
+
+    <script>
+        fetch('products.json') // Assuming 'products.json' is the correct path to your JSON file
+            .then(response => response.json())
+            .then(data => {
+                let displayOutput = "";
+                for (const item of data) {
+                    displayOutput += `
+                        <div class="product-card">
+                            <img src="${item.image}" alt="${item.productName}" class="product-image">
+                            <h3 class="label">${item.productName}</h3>
+                            <p class="price">$${item.price}</p>
+                            <button class="buy-button">Buy Now</button>
+                        </div>
+                    `;
+                }
+                document.querySelector("#output").innerHTML = displayOutput;
+            })
+    </script>
+</body>
+</html>
